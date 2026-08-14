@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: yatrakavach-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    # NOTE: Render's Free Tier does not support persistent disks.
+    # - If you are using the Free Tier, comment out the `disk` block below
+    #   and delete the `DATABASE_PATH` environment variable. The app will
+    #   then store the database in the ephemeral container directory and seed it.
+    # - If you are using a Paid Tier (e.g. Starter), keep the disk section
+    #   below to enable persistence of SQLite data across redeploys.
+    disk:
+      name: yatrakavach-db
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_PATH
+        value: /var/data/yatrakavach.db

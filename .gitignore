@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+/dist/
+/.env
+
+# Local Databases (SQLite files)
+*.db
+*.db-shm
+*.db-wal
+
+# OS files
+.DS_Store
+Thumbs.db

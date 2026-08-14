@@ -1,0 +1,49 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
+
+:root {
+  --asphalt: #14171b;
+  --asphalt-2: #1c2026;
+  --steel: #2a2f37;
+  --steel-light: #3a4149;
+  --amber: #ffb020;
+  --amber-dim: #8a5f14;
+  --green: #2ecc71;
+  --red: #e5484d;
+  --fog: #a9b0ba;
+  --paper: #f4f2ec;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: var(--asphalt);
+  color: var(--paper);
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display { font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.01em; }
+.font-mono { font-family: 'JetBrains Mono', monospace; }
+
+/* Signature: reflective mile-marker plate */
+.marker-plate {
+  background: repeating-linear-gradient(135deg, var(--asphalt-2) 0px, var(--asphalt-2) 10px, #21262d 10px, #21262d 20px);
+  border: 2px solid var(--amber);
+  box-shadow: 0 0 0 1px rgba(255,176,32,0.15), 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.hazard-stripe {
+  background: repeating-linear-gradient(45deg, var(--amber), var(--amber) 12px, var(--asphalt) 12px, var(--asphalt) 24px);
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.25); }
+}
+.pulse-dot { animation: pulse-dot 1.6s ease-in-out infinite; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--steel-light); border-radius: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
