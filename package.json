@@ -1,0 +1,9 @@
+{
+  "name": "yatrakavach-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm install --prefix backend",
+    "start": "node backend/src/server.js"
+  }
+}
