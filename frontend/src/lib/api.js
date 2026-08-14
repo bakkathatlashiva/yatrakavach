@@ -10,17 +10,26 @@ async function request(path, { method = 'GET', body, auth = true } = {}) {
     const token = getToken();
     if (token) headers.Authorization = `Bearer ${token}`;
   }
-  const res = await fetch(`${BASE}${path}`, {
-    method,
-    headers,
-    body: body ? JSON.stringify(body) : undefined,
-  });
-  let data = null;
-  try { data = await res.json(); } catch (e) { /* no body */ }
-  if (!res.ok) {
-    throw new Error(data?.error || `Request failed (${res.status})`);
+  try {
+    const res = await fetch(`${BASE}${path}`, {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : undefined,
+    });
+    let data = null;
+    try { data = await res.json(); } catch (e) { /* no body */ }
+    if (!res.ok) {
+      throw new Error(data?.error || `Request failed (${res.status})`);
+    }
+    return data;
+  } catch (err) {
+    // If it's a network error (failed connection, DNS issue, CORS block, etc.)
+    if (err.name === 'TypeError' || err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
+      console.error(`Network connection error to backend URL: ${BASE}${path}`, err);
+      throw new Error(`Failed to connect to the backend server at "${BASE}". Please verify the backend is running and your VITE_API_URL environment variable is set correctly.`);
+    }
+    throw err;
   }
-  return data;
 }
 
 export const api = {
