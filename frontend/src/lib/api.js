@@ -26,7 +26,15 @@ async function request(path, { method = 'GET', body, auth = true } = {}) {
     // If it's a network error (failed connection, DNS issue, CORS block, etc.)
     if (err.name === 'TypeError' || err.message.includes('Failed to fetch') || err.message.includes('NetworkError')) {
       console.error(`Network connection error to backend URL: ${BASE}${path}`, err);
-      throw new Error(`Failed to connect to the backend server at "${BASE}". Please verify the backend is running and your VITE_API_URL environment variable is set correctly.`);
+      
+      let errorMsg = `Failed to connect to the backend server at "${BASE}".`;
+      if (BASE.includes('localhost') && typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
+        errorMsg += ` Your frontend is running in production (${window.location.hostname}) but is trying to connect to a local backend ("${BASE}"). Please set the VITE_API_URL environment variable in Vercel to your Render backend URL (e.g., https://your-backend.onrender.com) and redeploy.`;
+      } else {
+        errorMsg += ` Please verify the backend is running and your VITE_API_URL environment variable is set correctly.`;
+      }
+      
+      throw new Error(errorMsg);
     }
     throw err;
   }
